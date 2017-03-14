@@ -29,6 +29,7 @@ Please submit your test driven solution via a public Git repository (github/bitb
 * If the numeral is I, X or C you can't have more than three ("II" + "II" = "IV" not “IIII”).
 * If the numeral is V, L or D you can't have more than one ("D" + "D" = "M" not “DD”)
 * The maximum roman numeral is 3999 (MMMCMXCIX)  
+* The minimum roman numeral is 1 (I)  
 
 ## Stories
 ### User Story: Addition
