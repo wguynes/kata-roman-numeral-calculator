@@ -36,3 +36,10 @@ public class RomanNumeralTest {
     public void givesVIforSumOfIIIandIII() {
         assertSum("III", "III", "VI");
     }
+
+    @Test
+    public void givesIVforSumOfIIandII() {
+        assertSum("II", "II", "VI");
+    }
+
+}
