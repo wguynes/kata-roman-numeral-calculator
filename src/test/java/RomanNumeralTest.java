@@ -23,4 +23,11 @@ public class RomanNumeralTest {
         numeral.sum(new RomanNumeral("II"));
         assertEquals("III", numeral.value);
     }
+
+    @Test
+    public void givesVforSumOfIIandIII() {
+        RomanNumeral numeral = new RomanNumeral("II");
+        numeral.sum(new RomanNumeral("III"));
+        assertEquals("V", numeral.value);
+    }
 }
