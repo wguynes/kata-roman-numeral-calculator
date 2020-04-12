@@ -31,4 +31,8 @@ public class RomanNumeralTest {
         numeral.sum(new RomanNumeral(second));
         assertEquals(expectedProduct, numeral.value);
     }
-}
+
+    @Test
+    public void givesVIforSumOfIIIandIII() {
+        assertSum("III", "III", "VI");
+    }
