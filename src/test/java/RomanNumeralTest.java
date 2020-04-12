@@ -12,22 +12,23 @@ public class RomanNumeralTest {
 
     @Test
     public void givesIIforSumOfIandI() {
-        RomanNumeral numeral = new RomanNumeral("I");
-        numeral.sum(numeral);
-        assertEquals("II", numeral.value);
+        assertSum("I", "I", "II");
     }
 
     @Test
     public void givesIIIforSumOfIandII() {
-        RomanNumeral numeral = new RomanNumeral("I");
-        numeral.sum(new RomanNumeral("II"));
-        assertEquals("III", numeral.value);
+        assertSum("I", "II", "III");
     }
 
     @Test
     public void givesVforSumOfIIandIII() {
-        RomanNumeral numeral = new RomanNumeral("II");
-        numeral.sum(new RomanNumeral("III"));
-        assertEquals("V", numeral.value);
+        assertSum("II", "III", "V");
+    }
+
+    void assertSum(String first, String second, String expectedProduct)
+    {
+        RomanNumeral numeral = new RomanNumeral(first);
+        numeral.sum(new RomanNumeral(second));
+        assertEquals(expectedProduct, numeral.value);
     }
 }
