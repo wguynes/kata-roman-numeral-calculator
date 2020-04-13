@@ -1,7 +1,9 @@
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class RomanNumeral {
 
@@ -12,57 +14,56 @@ public class RomanNumeral {
     }
 
     List<Character> sortOrder = Arrays.asList('M', 'D', 'C', 'L', 'X', 'V', 'I');
+    List<Pair<String, String>> ORDERED_LIST_OF_UNPACKING_PAIRS = Arrays.asList(
+            new Pair<>("CM", "DCCCC"),
+            new Pair<>("CD", "CCCC"),
+            new Pair<>("XL", "XXXX"),
+            new Pair<>("XC", "LXXXX"),
+            new Pair<>("IX", "VIIII"),
+            new Pair<>("IV", "IIII")
+    );
+    List<Pair<String, String>> ORDERED_LIST_OF_PACKING_PAIRS = Arrays.asList(
+            // pack
+            new Pair<>("IIIII", "V"),
+            new Pair<>("VV", "X"),
+            new Pair<>("XXXXX", "L"),
+            new Pair<>("LL", "C"),
+            new Pair<>("CCCCC", "D"),
+            new Pair<>("DD","M"),
+            // reintroduce 9s
+            new Pair<>("DCCCC", "CM"),
+            new Pair<>("LXXXX", "XC"),
+            new Pair<>("VIIII", "IX"),
+            // reintroduce 4s
+            new Pair<>("CCCC", "CD"),
+            new Pair<>("XXXX", "XL"),
+            new Pair<>("IIII", "IV")
+    );
+
 
     public RomanNumeral sum(RomanNumeral numeral) {
+        this.substituteSubStrings(ORDERED_LIST_OF_UNPACKING_PAIRS);
+        numeral.substituteSubStrings(ORDERED_LIST_OF_UNPACKING_PAIRS);
 
-        this.value = unpack(this.value);
-        numeral.value = unpack(numeral.value);
         this.value = this.value + numeral.value;
         sortCharactersByDecreasingValue();
-        this.value = pack(this.value);
+
+        this.substituteSubStrings(ORDERED_LIST_OF_PACKING_PAIRS);
         return this;
     }
 
-    private String unpack(String s) {
-        return s.replaceAll("CM", "DCCCC")
-                .replaceAll("CD", "CCCC")
-                .replaceAll("XC", "LXXXX")
-                .replaceAll("XL", "XXXX")
-                .replaceAll("IX", "VIIII")
-                .replaceAll("IV", "IIII")
-                ;
-    }
-
-    private String pack(String s) {
-        return s.replaceAll("IIIII", "V")
-                .replaceAll("VV", "X")
-                .replaceAll("XXXXX", "L")
-                .replaceAll("LL", "C")
-                .replaceAll("CCCCC", "D")
-                .replaceAll("DD","M")
-                // 1 unit from a 10 unit
-                .replaceAll("DCCCC", "CM")
-                .replaceAll("LXXXX", "XC")
-                .replaceAll("VIIII", "IX")
-                // 1 unit from a 5 unit
-                .replaceAll("IIII", "IV")
-                .replaceAll("XXXX", "XL")
-                .replaceAll("CCCC", "CD")
-                ;
+    private void substituteSubStrings(List<Pair<String, String>> pairList) {
+        for (Pair<String, String> p : pairList) {
+            this.value = this.value.replaceAll(p.getL(), p.getR());
+        }
     }
 
     private void sortCharactersByDecreasingValue() {
-        List<Character> list = new ArrayList<>();
-        for (char ch: this.value.toCharArray()) {
-            list.add(ch);
-        }
-
-        list.sort(Comparator.comparingInt(left -> sortOrder.indexOf(left)));
-
-        StringBuilder sb = new StringBuilder();
-        for (Character ch : list) {
-            sb.append(ch);
-        }
-        this.value = sb.toString();
+        this.value = this.value
+                .chars()
+                .mapToObj(e -> (char)e)
+                .sorted(Comparator.comparingInt(left -> sortOrder.indexOf(left)))
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 }
