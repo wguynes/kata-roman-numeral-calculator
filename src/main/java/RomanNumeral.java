@@ -22,31 +22,28 @@ public class RomanNumeral {
 
         this.value = new StringBuilder().append(this.value).append(numeral.value).toString();
 
+        sortValueCharacters();
 
-        List<Character> list = new ArrayList<>();
-        for (char ch: this.value.toCharArray()) {
-            list.add(ch);
-        }
-
-        list.sort(new Comparator<Character>() {
-            @Override
-            public int compare(Character left, Character right) {
-                return Integer.compare(sortOrder.indexOf(left), sortOrder.indexOf(right));
-            }
-        });
-
-        StringBuilder sb = new StringBuilder();
-        for (Character ch : list) {
-            sb.append(ch);
-        }
-        this.value = sb.toString();
-
-//        this.value = this.value.replaceAll("VIIIII", "X");
         this.value = this.value.replaceAll("IIIII", "V");
         this.value = this.value.replaceAll("VV", "X");
         this.value = this.value.replaceAll("VIIII", "IX");
         this.value = this.value.replaceAll("IIII", "IV");
 
         return this;
+    }
+
+    private void sortValueCharacters() {
+        List<Character> list = new ArrayList<>();
+        for (char ch: this.value.toCharArray()) {
+            list.add(ch);
+        }
+
+        list.sort(Comparator.comparingInt(left -> sortOrder.indexOf(left)));
+
+        StringBuilder sb = new StringBuilder();
+        for (Character ch : list) {
+            sb.append(ch);
+        }
+        this.value = sb.toString();
     }
 }
