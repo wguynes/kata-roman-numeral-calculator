@@ -11,28 +11,47 @@ public class RomanNumeral {
         this.value = value;
     }
 
-    List<Character> sortOrder = Arrays.asList('V','I');
+    List<Character> sortOrder = Arrays.asList('M', 'D', 'C', 'L', 'X', 'V', 'I');
 
     public RomanNumeral sum(RomanNumeral numeral) {
-        this.value = this.value.replaceAll("IX", "VIIII");
-        this.value = this.value.replaceAll("IV", "IIII");
 
-        numeral.value = numeral.value.replaceAll("IX", "VIIII");
-        numeral.value = numeral.value.replaceAll("IV", "IIII");
-
-        this.value = new StringBuilder().append(this.value).append(numeral.value).toString();
-
-        sortValueCharacters();
-
-        this.value = this.value.replaceAll("IIIII", "V");
-        this.value = this.value.replaceAll("VV", "X");
-        this.value = this.value.replaceAll("VIIII", "IX");
-        this.value = this.value.replaceAll("IIII", "IV");
-
+        this.value = unpack(this.value);
+        numeral.value = unpack(numeral.value);
+        this.value = this.value + numeral.value;
+        sortCharactersByDecreasingValue();
+        this.value = pack(this.value);
         return this;
     }
 
-    private void sortValueCharacters() {
+    private String unpack(String s) {
+        return s.replaceAll("CM", "DCCCC")
+                .replaceAll("CD", "CCCC")
+                .replaceAll("XC", "LXXXX")
+                .replaceAll("XL", "XXXX")
+                .replaceAll("IX", "VIIII")
+                .replaceAll("IV", "IIII")
+                ;
+    }
+
+    private String pack(String s) {
+        return s.replaceAll("IIIII", "V")
+                .replaceAll("VV", "X")
+                .replaceAll("XXXXX", "L")
+                .replaceAll("LL", "C")
+                .replaceAll("CCCCC", "D")
+                .replaceAll("DD","M")
+                // 1 unit from a 10 unit
+                .replaceAll("DCCCC", "CM")
+                .replaceAll("LXXXX", "XC")
+                .replaceAll("VIIII", "IX")
+                // 1 unit from a 5 unit
+                .replaceAll("IIII", "IV")
+                .replaceAll("XXXX", "XL")
+                .replaceAll("CCCC", "CD")
+                ;
+    }
+
+    private void sortCharactersByDecreasingValue() {
         List<Character> list = new ArrayList<>();
         for (char ch: this.value.toCharArray()) {
             list.add(ch);

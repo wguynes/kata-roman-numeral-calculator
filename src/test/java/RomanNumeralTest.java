@@ -76,4 +76,94 @@ public class RomanNumeralTest {
         assertSum("VIII", "II", "X");
         assertSum("IX", "I", "X");
     }
+
+    @Test
+    public void sumsToXXX() {
+        assertSum("X", "XX", "XXX");
+        assertSum("XX", "X", "XXX");
+    }
+
+    @Test
+    public void sumsToXL() {
+        assertSum("X", "XXX", "XL");
+        assertSum("XX", "XX", "XL");
+        assertSum("XXX", "X", "XL");
+    }
+
+    @Test
+    public void XXplusXXXsumsToL() {
+        assertSum("XX", "XXX", "L");
+    }
+
+    @Test
+    public void XLplusXsumsToL() {
+        assertSum("XL", "X", "L");
+        assertSum("X", "XL", "L");
+    }
+
+    @Test
+    public void sumsToC() {
+        assertSum("X", "XC", "C");
+        assertSum("XX", "LXXX", "C");
+        assertSum("XXX", "LXX", "C");
+        assertSum("XL", "LX", "C");
+        assertSum("L", "L", "C");
+        assertSum("LX", "XL", "C");
+        assertSum("LXX", "XXX", "C");
+        assertSum("LXXX", "XX", "C");
+        assertSum("XC", "X", "C");
+    }
+
+    @Test
+    public void sumsToXC() {
+        assertSum("X", "LXXX", "XC");
+        assertSum("XX", "LXX", "XC");
+        assertSum("XXX", "LX", "XC");
+        assertSum("XL", "L", "XC");
+        assertSum("L", "XL", "XC");
+        assertSum("LX", "XXX", "XC");
+        assertSum("LXX", "XX", "XC");
+        assertSum("LXXX", "X", "XC");
+    }
+
+    @Test
+    public void sumsToD() {
+        assertSum("C", "CD", "D");
+        assertSum("CC", "CCC", "D");
+        assertSum("CCC", "CC", "D");
+        assertSum("CD", "C", "D");
+    }
+
+    @Test
+    public void sumsToCD() {
+        assertSum("C", "CCC", "CD");
+        assertSum("CC", "CC", "CD");
+        assertSum("CCC", "C", "CD");
+    }
+
+    @Test
+    public void sumsToM() {
+        assertSum("C", "CM", "M");
+        assertSum("CC", "DCCC", "M");
+        assertSum("CCC", "DCC", "M");
+        assertSum("CD", "DC", "M");
+        assertSum("D", "D", "M");
+        assertSum("DC", "CD", "M");
+        assertSum("DCC", "CCC", "M");
+        assertSum("DCCC", "CC", "M");
+        assertSum("CM", "C", "M");
+    }
+
+    @Test
+    public void sumsToCM() {
+        assertSum("C", "DCCC", "CM");
+        assertSum("CC", "DCC", "CM");
+        assertSum("CCC", "DC", "CM");
+        assertSum("CD", "D", "CM");
+        assertSum("D", "CD", "CM");
+        assertSum("DC", "CCC", "CM");
+        assertSum("DCC", "CC", "CM");
+        assertSum("DCCC", "C", "CM");
+    }
+
 }
