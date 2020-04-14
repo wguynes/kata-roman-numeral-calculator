@@ -18,7 +18,7 @@ public class RomanNumeral {
         this.value = value;
     }
 
-    List<Character> sortOrder = Arrays.asList('M', 'D', 'C', 'L', 'X', 'V', 'I');
+    List<Character> CHARACTER_VALUE_ORDER = Arrays.asList('M', 'D', 'C', 'L', 'X', 'V', 'I');
     List<StringPair> ORDERED_LIST_OF_UNPACKING_PAIRS = Arrays.asList(
             new StringPair("CM", "DCCCC"),
             new StringPair("CD", "CCCC"),
@@ -47,18 +47,18 @@ public class RomanNumeral {
 
 
     public RomanNumeral sum(RomanNumeral numeral) {
-        this.substituteSubStrings(ORDERED_LIST_OF_UNPACKING_PAIRS);
-        numeral.substituteSubStrings(ORDERED_LIST_OF_UNPACKING_PAIRS);
+        this.applyOrderedSubstitutions(ORDERED_LIST_OF_UNPACKING_PAIRS);
+        numeral.applyOrderedSubstitutions(ORDERED_LIST_OF_UNPACKING_PAIRS);
 
         this.value = this.value + numeral.value;
         sortCharactersByDecreasingValue();
 
-        this.substituteSubStrings(ORDERED_LIST_OF_PACKING_PAIRS);
+        this.applyOrderedSubstitutions(ORDERED_LIST_OF_PACKING_PAIRS);
         return this;
     }
 
-    private void substituteSubStrings(List<StringPair> pairList) {
-        for (Pair<String, String> p : pairList) {
+    private void applyOrderedSubstitutions(List<StringPair> pairList) {
+        for (StringPair p : pairList) {
             this.value = this.value.replaceAll(p.getLeft(), p.getRight());
         }
     }
@@ -67,7 +67,7 @@ public class RomanNumeral {
         this.value = this.value
                 .chars()
                 .mapToObj(e -> (char)e)
-                .sorted(Comparator.comparingInt(left -> sortOrder.indexOf(left)))
+                .sorted(Comparator.comparingInt(left -> CHARACTER_VALUE_ORDER.indexOf(left)))
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
