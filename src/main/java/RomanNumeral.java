@@ -71,4 +71,19 @@ public class RomanNumeral {
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
+
+    public RomanNumeral difference(RomanNumeral numeral) {
+
+//        long leftCountOfI = left.chars().filter(ch -> ch == 'I').count();
+//        long rightCountOfI = right.chars().filter(ch -> ch == 'I').count();
+//        long countToRemove = Math.min(leftCountOfI, rightCountOfI);
+
+        long rightCount = numeral.value.chars().filter(ch -> ch == 'I').count();
+        for (long i = 0; i < rightCount; i++) {
+            this.value = this.value.replaceFirst("I","");
+        }
+
+
+        return this;
+    }
 }

@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 public class RomanNumeralTest {
 
-    void assertSum(String first, String second, String expectedProduct)
+    void assertSum(String first, String second, String expectedSum)
     {
         RomanNumeral numeral = new RomanNumeral(first);
         numeral.sum(new RomanNumeral(second));
-        assertEquals(expectedProduct, numeral.value);
+        assertEquals(expectedSum, numeral.value);
     }
 
     @Test
@@ -166,4 +166,22 @@ public class RomanNumeralTest {
         assertSum("DCCC", "C", "CM");
     }
 
+    void assertDifference(String first, String second, String expectedDifference)
+    {
+        RomanNumeral numeral = new RomanNumeral(first);
+        numeral.difference(new RomanNumeral(second));
+        assertEquals(expectedDifference, numeral.value);
+    }
+
+    @Test
+    public void replaceFirstTest() {
+        String s = "abc".replaceFirst("z", "x");
+        assertEquals("abc", s);
+    }
+
+    @Test
+    public void differenceToI() {
+        assertDifference("II", "I", "I");
+        assertDifference("III", "II", "I");
+    }
 }
